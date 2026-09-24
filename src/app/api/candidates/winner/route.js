@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import connectToDatabase from "@/lib/mongodb";
-import getCandidateModel from "@/models/Candidate";
+import prisma from "@/lib/prisma";
 
 export async function POST(request) {
   try {
@@ -13,40 +12,54 @@ export async function POST(request) {
       );
     }
 
-    try {
-      const conn = await connectToDatabase();
-      const Candidate = await getCandidateModel();
-
-      if (conn && Candidate) {
+    if (prisma?.candidate) {
+      try {
         let updated = null;
-        if (id && !id.startsWith("fallback-") && !id.startsWith("seed-") && !id.startsWith("local-")) {
-          updated = await Candidate.findByIdAndUpdate(
-            id,
-            { $inc: { wins: 1 }, $set: { lastWonAt: new Date() } },
-            { new: true }
-          );
+        const numericId = parseInt(id, 10);
+
+        if (!isNaN(numericId)) {
+          updated = await prisma.candidate.update({
+            where: { id: numericId },
+            data: {
+              wins: { increment: 1 },
+              lastWonAt: new Date(),
+            },
+          });
         } else if (name) {
-          updated = await Candidate.findOneAndUpdate(
-            { name },
-            { $inc: { wins: 1 }, $set: { lastWonAt: new Date() } },
-            { new: true }
-          );
+          const found = await prisma.candidate.findFirst({
+            where: { name },
+          });
+
+          if (found) {
+            updated = await prisma.candidate.update({
+              where: { id: found.id },
+              data: {
+                wins: { increment: 1 },
+                lastWonAt: new Date(),
+              },
+            });
+          }
         }
 
         if (updated) {
           return NextResponse.json({
             success: true,
-            winner: updated,
+            winner: {
+              ...updated,
+              _id: String(updated.id),
+            },
+            source: "postgresql",
           });
         }
+      } catch (dbErr) {
+        console.warn("PostgreSQL winner update error:", dbErr);
       }
-    } catch (dbErr) {
-      console.warn("MongoDB winner update error:", dbErr);
     }
 
     return NextResponse.json({
       success: true,
-      winner: { id, name, wins: 1, lastWonAt: new Date() },
+      winner: { id, _id: String(id), name, wins: 1, lastWonAt: new Date() },
+      source: "fallback",
     });
   } catch (error) {
     console.error("Winner recording error:", error);

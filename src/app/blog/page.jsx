@@ -101,7 +101,7 @@ export default function BlogPage() {
 
   const fileInputRef = useRef(null);
 
-  // Fetch blogs from MongoDB API
+  // Fetch blogs from PostgreSQL API
   const fetchBlogs = async () => {
     try {
       setLoading(true);
@@ -109,7 +109,7 @@ export default function BlogPage() {
       const json = await res.json();
       if (json.success && Array.isArray(json.data)) {
         setBlogs(json.data);
-        setDbSource(json.source || "mongodb");
+        setDbSource(json.source || "postgresql");
       }
     } catch (err) {
       console.error("Failed to fetch blogs:", err);
@@ -266,7 +266,7 @@ export default function BlogPage() {
                 <span>Tech Insights & Architectural Logs</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                 <span className="text-[11px] font-mono text-emerald-600 font-medium">
-                  {dbSource === "mongodb" ? "MongoDB Atlas Live" : "DB Synchronized"}
+                  {dbSource === "postgresql" ? "PostgreSQL & MinIO Live" : "PostgreSQL Live"}
                 </span>
               </div>
 
@@ -277,7 +277,7 @@ export default function BlogPage() {
 
               <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
                 Detailed breakdowns on building multi-tenant SaaS products,
-                high-throughput MongoDB architectures, React 19 server patterns, and
+                high-throughput PostgreSQL architectures, MinIO object storage, React 19 server patterns, and
                 scalable cloud systems by Danish Khan.
               </p>
 
@@ -309,10 +309,10 @@ export default function BlogPage() {
               <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
                   <Database className="w-4 h-4 text-[var(--secondary)]" />
-                  MongoDB Storage
+                  PostgreSQL &amp; MinIO
                 </span>
                 <span className="px-2 py-0.5 rounded-full text-[11px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  Live Collection
+                  Prisma ORM
                 </span>
               </div>
 
@@ -428,7 +428,7 @@ export default function BlogPage() {
             <p className="mt-1.5 text-sm text-slate-500 max-w-sm mx-auto">
               {searchQuery || activeCategory !== "All"
                 ? "No articles matched your filter or search query. Try clearing filters or create a new blog post."
-                : "No blogs have been added yet. Click the button below to publish your first blog post to MongoDB!"}
+                : "No blogs have been added yet. Click the button below to publish your first blog post to PostgreSQL database!"}
             </p>
             <div className="mt-5 flex items-center justify-center gap-3">
               {(searchQuery || activeCategory !== "All") && (
@@ -470,12 +470,12 @@ export default function BlogPage() {
 
               return (
                 <article
-                  key={blog._id}
+                  key={blog.id || blog._id}
                   className="group relative flex flex-col rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-200 transition-all duration-300 overflow-hidden"
                 >
                   {/* Card Cover Image with Link to dedicated page */}
                   <Link
-                    href={`/blog/${blog._id}`}
+                    href={`/blog/${blog.slug || blog.id || blog._id}`}
                     className="block relative h-52 w-full overflow-hidden bg-slate-100 cursor-pointer"
                   >
                     {blog.image ? (
@@ -522,7 +522,7 @@ export default function BlogPage() {
                     </div>
 
                     {/* Title linked to page */}
-                    <Link href={`/blog/${blog._id}`} className="block">
+                    <Link href={`/blog/${blog.slug || blog.id || blog._id}`} className="block">
                       <h2 className="text-lg font-bold text-slate-900 group-hover:text-[var(--primary)] transition-colors line-clamp-2 leading-snug">
                         {blog.title}
                       </h2>
@@ -559,7 +559,7 @@ export default function BlogPage() {
                       </div>
 
                       <Link
-                        href={`/blog/${blog._id}`}
+                        href={`/blog/${blog.slug || blog.id || blog._id}`}
                         className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)] group-hover:translate-x-0.5 transition-transform"
                       >
                         Read Full Article
@@ -594,7 +594,7 @@ export default function BlogPage() {
                     Create New Blog Post
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Saves directly to your live MongoDB collection
+                    Saves directly to your live PostgreSQL database
                   </p>
                 </div>
               </div>
@@ -622,7 +622,7 @@ export default function BlogPage() {
             {submitSuccess && (
               <div className="mb-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-700 flex items-center gap-2 animate-in zoom-in-95 duration-200">
                 <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
-                <span>🎉 Blog post successfully saved to MongoDB database!</span>
+                <span>🎉 Blog post successfully saved to PostgreSQL database!</span>
               </div>
             )}
 
@@ -900,7 +900,7 @@ export default function BlogPage() {
                   {isSubmitting ? (
                     <>
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>Saving to MongoDB...</span>
+                      <span>Saving to PostgreSQL database...</span>
                     </>
                   ) : submitSuccess ? (
                     <>

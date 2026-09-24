@@ -22,6 +22,8 @@ import { WhatsAppIcon } from "@/components/Icons";
 export default function ContactSection() {
   const [copiedField, setCopiedField] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,10 +60,34 @@ export default function ContactSection() {
     }, 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    setFormSubmitted(true);
+    try {
+      setIsSubmitting(true);
+      setSubmitError("");
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.projectType,
+          message: formData.message,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit inquiry.");
+      }
+      setFormSubmitted(true);
+    } catch (err) {
+      console.error("Contact submit error:", err);
+      setSubmitError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -444,13 +470,20 @@ export default function ContactSection() {
                       />
                     </div>
 
+                    {submitError && (
+                      <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+                        {submitError}
+                      </div>
+                    )}
+
                     {/* Submit Button */}
                     <button
                       type="submit"
-                      className="btn-canva-primary mt-2 flex items-center justify-center gap-2 rounded-xl py-3.5 px-6 text-sm font-bold shadow-lg"
+                      disabled={isSubmitting}
+                      className="btn-canva-primary mt-2 flex items-center justify-center gap-2 rounded-xl py-3.5 px-6 text-sm font-bold shadow-lg disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                     >
-                      <Send className="w-4 h-4" />
-                      <span>Send Message</span>
+                      <Send className={`w-4 h-4 ${isSubmitting ? "animate-spin" : ""}`} />
+                      <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
                     </button>
 
                     <div className="mt-2 flex items-center justify-center gap-2 text-xs text-slate-500">

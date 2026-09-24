@@ -1,28 +1,36 @@
 import { NextResponse } from "next/server";
-import connectToDatabase from "@/lib/mongodb";
-import getCandidateModel from "@/models/Candidate";
+import prisma from "@/lib/prisma";
 
-// In-memory fallback if MongoDB or Mongoose is waiting to be connected/installed
+// Fallback candidates if DB is newly initialized and empty
 let fallbackCandidates = [
-  { _id: "fallback-1", name: "Danish Khan", wins: 0, createdAt: new Date() },
-  { _id: "fallback-2", name: "Rahul Sharma", wins: 0, createdAt: new Date() },
-  { _id: "fallback-3", name: "Priya Verma", wins: 0, createdAt: new Date() },
-  { _id: "fallback-4", name: "Aman Gupta", wins: 0, createdAt: new Date() },
-  { _id: "fallback-5", name: "Sara Ali", wins: 0, createdAt: new Date() },
+  { id: 1, _id: "1", name: "Danish Khan", wins: 0, createdAt: new Date() },
+  { id: 2, _id: "2", name: "Rahul Sharma", wins: 0, createdAt: new Date() },
+  { id: 3, _id: "3", name: "Priya Verma", wins: 0, createdAt: new Date() },
+  { id: 4, _id: "4", name: "Aman Gupta", wins: 0, createdAt: new Date() },
+  { id: 5, _id: "5", name: "Sara Ali", wins: 0, createdAt: new Date() },
 ];
+
+function formatCandidate(c) {
+  return {
+    ...c,
+    _id: String(c.id),
+  };
+}
 
 export async function GET() {
   try {
-    const conn = await connectToDatabase();
-    const Candidate = await getCandidateModel();
-
-    if (conn && Candidate) {
-      const candidates = await Candidate.find({}).sort({ createdAt: 1 }).lean();
-      return NextResponse.json({
-        success: true,
-        data: candidates,
-        source: "mongodb",
+    if (prisma?.candidate) {
+      const candidates = await prisma.candidate.findMany({
+        orderBy: { createdAt: "asc" },
       });
+
+      if (candidates.length > 0) {
+        return NextResponse.json({
+          success: true,
+          data: candidates.map(formatCandidate),
+          source: "postgresql",
+        });
+      }
     }
 
     return NextResponse.json({
@@ -31,7 +39,7 @@ export async function GET() {
       source: "memory_fallback",
     });
   } catch (error) {
-    console.error("GET candidates fallback error:", error);
+    console.error("GET candidates PostgreSQL error:", error);
     return NextResponse.json({
       success: true,
       data: fallbackCandidates,
@@ -52,23 +60,28 @@ export async function POST(request) {
       );
     }
 
-    try {
-      const conn = await connectToDatabase();
-      const Candidate = await getCandidateModel();
+    if (prisma?.candidate) {
+      try {
+        const newCandidate = await prisma.candidate.create({
+          data: { name },
+        });
 
-      if (conn && Candidate) {
-        const newCandidate = await Candidate.create({ name });
         return NextResponse.json(
-          { success: true, data: newCandidate, source: "mongodb" },
+          {
+            success: true,
+            data: formatCandidate(newCandidate),
+            source: "postgresql",
+          },
           { status: 201 }
         );
+      } catch (dbErr) {
+        console.warn("PostgreSQL insert error, using session memory:", dbErr);
       }
-    } catch (dbErr) {
-      console.warn("MongoDB insert error, using session memory:", dbErr);
     }
 
     const fallbackItem = {
-      _id: `fallback-${Date.now()}`,
+      id: Date.now(),
+      _id: String(Date.now()),
       name,
       wins: 0,
       createdAt: new Date(),
@@ -98,31 +111,33 @@ export async function DELETE(request) {
     const id = searchParams.get("id");
     const clearAll = searchParams.get("all") === "true";
 
-    try {
-      const conn = await connectToDatabase();
-      const Candidate = await getCandidateModel();
-
-      if (conn && Candidate) {
+    if (prisma?.candidate) {
+      try {
         if (clearAll) {
-          await Candidate.deleteMany({});
+          await prisma.candidate.deleteMany({});
           fallbackCandidates = [];
           return NextResponse.json({ success: true, message: "All candidates cleared" });
         }
 
-        if (id && !id.startsWith("fallback-") && !id.startsWith("seed-") && !id.startsWith("local-")) {
-          await Candidate.findByIdAndDelete(id);
-          fallbackCandidates = fallbackCandidates.filter((c) => c._id !== id);
+        if (id) {
+          const numericId = parseInt(id, 10);
+          if (!isNaN(numericId)) {
+            await prisma.candidate.delete({
+              where: { id: numericId },
+            });
+          }
+          fallbackCandidates = fallbackCandidates.filter((c) => String(c.id) !== String(id) && c._id !== id);
           return NextResponse.json({ success: true, message: "Candidate deleted" });
         }
+      } catch (dbErr) {
+        console.warn("PostgreSQL candidate delete error, updating memory:", dbErr);
       }
-    } catch (dbErr) {
-      console.warn("MongoDB delete error, applying to session memory:", dbErr);
     }
 
     if (clearAll) {
       fallbackCandidates = [];
     } else if (id) {
-      fallbackCandidates = fallbackCandidates.filter((c) => c._id !== id);
+      fallbackCandidates = fallbackCandidates.filter((c) => String(c.id) !== String(id) && c._id !== id);
     }
 
     return NextResponse.json({

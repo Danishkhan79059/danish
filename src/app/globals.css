@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/* ==========================================================================
-   CANVA LOGO COLOR THEME - SINGLE SOURCE OF TRUTH (EK HI JAGAH COLOR THEME)
-   Aap niche diye gaye colors ko yahan change karenge toh poore portfolio
-   me automatically sab jagah color change ho jayega!
-   ========================================================================== */
 :root {
   /* Canva Brand Gradient Colors */
   --primary: #7d2ae8;             /* Canva Signature Purple/Violet */
