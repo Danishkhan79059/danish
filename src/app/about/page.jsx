@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import BorderGlow from "@/components/BorderGlow";
 import {
@@ -34,16 +35,18 @@ import {
   Laptop,
   Check,
   PhoneCall,
+  Users2,
+  Building2,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, WhatsAppIcon } from "@/components/Icons";
 
-// 5 Core Questions Navigation Map
 const QUESTIONS_NAV = [
   { id: "who-is-danish", number: "01", label: "Who is Danish?" },
-  { id: "what-he-builds", number: "02", label: "What He Builds" },
-  { id: "technologies", number: "03", label: "Tech Stack" },
-  { id: "real-world-experience", number: "04", label: "Real Experience" },
-  { id: "value-to-company", number: "05", label: "Value to Your Company" },
+  { id: "about-team", number: "02", label: "About Team" },
+  { id: "what-he-builds", number: "03", label: "What He Builds" },
+  { id: "technologies", number: "04", label: "Tech Stack" },
+  { id: "real-world-experience", number: "05", label: "Real Experience" },
+  { id: "value-to-company", number: "06", label: "Value to Your Company" },
 ];
 
 // Tech Stack Matrix Data
@@ -65,7 +68,7 @@ const TECH_ITEMS = [
   { name: "TailwindCSS v4", category: "frontend", level: "Expert", desc: "Modern utility styling, CSS design tokens, dark themes & animations" },
   { name: "Material UI (MUI)", category: "frontend", level: "Advanced", desc: "Enterprise design systems, complex data tables & form components" },
   { name: "Framer Motion", category: "frontend", level: "Advanced", desc: "Micro-animations, layout transitions & interactive physics" },
-  
+
   // Backend
   { name: "Node.js", category: "backend", level: "Advanced", desc: "Event-driven runtime, asynchronous streams & high concurrency" },
   { name: "Express.js", category: "backend", level: "Advanced", desc: "Modular REST APIs, middleware pipelines & controller architecture" },
@@ -139,7 +142,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-6 text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed font-normal"
           >
-            A full-stack product engineer with <strong>3+ years of production experience</strong> crafting 
+            A full-stack product engineer with <strong>3+ years of production experience</strong> crafting
             multi-tenant SaaS architectures, high-throughput logistics aggregators, and real-time data visualization platforms.
           </motion.p>
 
@@ -232,11 +235,10 @@ export default function AboutPage() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveCodeTab(tab.id)}
-                    className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-                      activeCodeTab === tab.id
+                    className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${activeCodeTab === tab.id
                         ? "bg-[var(--primary)] text-white shadow-xs font-bold"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                    }`}
+                      }`}
                   >
                     {tab.label}
                   </button>
@@ -312,7 +314,7 @@ export default function AboutPage() {
               Who is <span className="text-canva-gradient">Danish Khan</span>?
             </h2>
             <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-              A dedicated software engineer who bridges the gap between complex operational requirements 
+              A dedicated software engineer who bridges the gap between complex operational requirements
               and fluid, high-converting digital products.
             </p>
           </div>
@@ -322,21 +324,21 @@ export default function AboutPage() {
             {/* Story & Biography (7 Cols) */}
             <div className="lg:col-span-7 space-y-6 text-slate-700 leading-relaxed font-normal">
               <p className="text-base sm:text-lg font-medium text-slate-900 leading-relaxed">
-                Hi! I’m Danish Khan. Over the past 3+ years, I’ve dedicated my career to building 
-                resilient web applications and full-scale SaaS platforms that solve real, painful problems 
+                Hi! I’m Danish Khan. Over the past 3+ years, I’ve dedicated my career to building
+                resilient web applications and full-scale SaaS platforms that solve real, painful problems
                 for modern businesses.
               </p>
 
               <p>
-                My engineering journey began with an insatiable curiosity about how software powers businesses behind the scenes. 
+                My engineering journey began with an insatiable curiosity about how software powers businesses behind the scenes.
                 Rather than sticking to isolated tutorials or static websites, I threw myself into the deep end of production engineering:
-                handling high-throughput <strong>logistics aggregator platforms</strong>, coordinating heterogeneous courier APIs, 
+                handling high-throughput <strong>logistics aggregator platforms</strong>, coordinating heterogeneous courier APIs,
                 and crafting <strong>dynamic drag-and-drop data visualization tools</strong> that transform raw CSV and database queries into intuitive executive dashboards.
               </p>
 
               <p>
-                I don’t view myself as just a coder who translates tickets into syntax. I act as an engineering partner: 
-                I analyze user flows, challenge assumptions when simpler solutions exist, safeguard database performance with strict indexing, 
+                I don’t view myself as just a coder who translates tickets into syntax. I act as an engineering partner:
+                I analyze user flows, challenge assumptions when simpler solutions exist, safeguard database performance with strict indexing,
                 and ensure that the final product feels effortless, snappy, and visually delightful.
               </p>
 
@@ -365,7 +367,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Specialized in full-stack JavaScript architectures, multi-tenant databases, 
+                  Specialized in full-stack JavaScript architectures, multi-tenant databases,
                   server-rendered React frameworks, and resilient REST/WebSocket protocols.
                 </p>
               </div>
@@ -381,7 +383,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Based in India with proven remote collaboration experience. Comfortable working 
+                  Based in India with proven remote collaboration experience. Comfortable working
                   across flexible timezones, asynchronous communication, and sprint deadlines.
                 </p>
               </div>
@@ -397,7 +399,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Clear written updates, thorough self-QA before PR submissions, and a relentless 
+                  Clear written updates, thorough self-QA before PR submissions, and a relentless
                   commitment to keeping repositories clean and well-structured.
                 </p>
               </div>
@@ -407,21 +409,195 @@ export default function AboutPage() {
       </section>
 
       {/* =========================================================================
+          ABOUT TEAM: DANISH + GOPAL
+          ========================================================================= */}
+      <section id="about-team" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50/50 border-b border-slate-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-canva text-xs font-bold uppercase tracking-wider mb-3">
+              <Users2 className="h-3.5 w-3.5 text-[var(--primary)]" />
+              Subsection • About Team
+            </span>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                Meet the <span className="text-canva-gradient">Engineering Team</span>
+              </h2>
+              <a
+                href="https://aishyp.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit AiShyp on LinkedIn"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0A66C2] shadow-xs hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] hover:scale-105 transition-all"
+              >
+                <LinkedinIcon className="w-5 h-5" />
+              </a>
+            </div>
+            <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              Two full-stack MERN developers shipping production SaaS together — product ownership on one side, complementary engineering on the other.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {/* Danish — left */}
+            <article className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm hover:border-[var(--primary)] hover:shadow-md transition-all">
+              <div className="relative mb-6 overflow-hidden rounded-2xl border border-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(125,42,232,0.14)_0%,rgba(0,196,204,0.08)_55%,transparent_80%)]">
+                <div className="flex h-56 sm:h-64 items-center justify-center">
+                  <div className="relative h-40 w-40 sm:h-44 sm:w-44 rounded-full border-4 border-white shadow-lg shadow-purple-500/15 overflow-hidden bg-white">
+                    <Image
+                      src="/dan.png"
+                      alt="Danish Khan"
+                      fill
+                      className="object-contain p-2"
+                      sizes="176px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--primary-light)] text-[11px] font-bold uppercase tracking-wider text-[var(--primary)]">
+                  <Code2 className="h-3 w-3" />
+                  MERN Stack Developer
+                </span>
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                  3+ Years
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                  Danish Khan
+                </h3>
+                <a
+                  href="https://www.linkedin.com/in/danishkhan786/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Danish Khan LinkedIn"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                </a>
+              </div>
+              <p className="mt-1 text-sm font-semibold text-[var(--primary)]">
+                Full-Stack MERN &amp; SaaS Product Engineer
+              </p>
+              <p className="mt-4 text-sm text-slate-600 leading-relaxed">
+                Danish leads end-to-end product engineering across multi-tenant SaaS, logistics aggregators, and real-time dashboards. He works the full MERN stack — React, Next.js, Node.js, Express, and MongoDB — from schema design to polished UI, with a production-first mindset around performance, tenant isolation, and shipping features that actually move business metrics.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["React / Next.js", "Node.js", "MongoDB", "SaaS Architecture"].map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[11px] font-semibold text-slate-700"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+                <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                
+                <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3.5">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                    <Building2 className="h-3.5 w-3.5 text-[var(--secondary)]" />
+                    VizLabs
+                  </div>
+                  <p className="mt-1 text-[11px] text-slate-500 leading-relaxed">
+                    3 years • Full-stack web apps
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            {/* Gopal — right */}
+            <article className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm hover:border-[var(--secondary)] hover:shadow-md transition-all">
+              <div className="relative mb-6 overflow-hidden rounded-2xl border border-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(0,196,204,0.16)_0%,rgba(56,120,232,0.08)_55%,transparent_80%)]">
+                <div className="relative mb-6 overflow-hidden rounded-2xl border border-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(125,42,232,0.14)_0%,rgba(0,196,204,0.08)_55%,transparent_80%)]">
+                  <div className="flex h-56 sm:h-64 items-center justify-center">
+                    <div className="relative h-40 w-40 sm:h-44 sm:w-44 rounded-full border-4 border-white shadow-lg shadow-purple-500/15 overflow-hidden bg-white">
+                      <Image
+                        src="/gopal.png"
+                        alt="Gopal"
+                        fill
+                        className="object-contain p-2"
+                        sizes="176px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                  <Code2 className="h-3 w-3" />
+                  MERN Stack Developer
+                </span>
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                  3+ Years
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                  Gopal Krishna
+                </h3>
+                <a
+                  href="https://www.linkedin.com/in/gopal-krishna-basudevan-7b161215b/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Gopal Krishna LinkedIn"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                </a>
+              </div>
+              <p className="mt-1 text-sm font-semibold text-teal-700">
+                Full-Stack MERN Developer
+              </p>
+              <p className="mt-4 text-sm text-slate-600 leading-relaxed">
+                Gopal is a MERN stack developer focused on shipping reliable web applications with MongoDB, Express, React, and Node.js. He brings hands-on production experience from two product companies — building features, APIs, and UI with the same full-stack ownership that keeps products moving from idea to release.
+              </p>
+
+              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3.5">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                    <Building2 className="h-3.5 w-3.5 text-[var(--primary)]" />
+                    Provar
+                  </div>
+                  <p className="mt-1 text-[11px] text-slate-500 leading-relaxed">
+                    1 year • MERN product engineering
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3.5">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                    <Building2 className="h-3.5 w-3.5 text-[var(--secondary)]" />
+                    VizLabs
+                  </div>
+                  <p className="mt-1 text-[11px] text-slate-500 leading-relaxed">
+                    1.5 years • Full-stack web apps
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
           QUESTION 2: WHAT DOES HE BUILD?
           ========================================================================= */}
-      <section id="what-he-builds" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50/50 border-b border-slate-100">
+      <section id="what-he-builds" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-100">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-canva text-xs font-bold uppercase tracking-wider mb-3">
               <span className="h-2 w-2 rounded-full bg-[var(--secondary)]" />
-              Question 02 • Products &amp; Platforms
+              Question 03 • Products &amp; Platforms
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
               What Does Danish <span className="text-canva-gradient">Build</span>?
             </h2>
             <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-              Danish builds production-ready systems that handle high transaction volumes, 
+              Danish builds production-ready systems that handle high transaction volumes,
               intricate data calculations, and high-stakes operational workflows.
             </p>
           </div>
@@ -457,8 +633,8 @@ export default function AboutPage() {
                     Logistics &amp; Multi-Carrier SaaS Aggregators
                   </h3>
                   <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-                    Platforms that connect merchants with multiple courier partners simultaneously. 
-                    Features live rate engines, automatic Airway Bill (AWB) generation, weight reconciliation, 
+                    Platforms that connect merchants with multiple courier partners simultaneously.
+                    Features live rate engines, automatic Airway Bill (AWB) generation, weight reconciliation,
                     real-time tracking webhooks, and automated PDF shipping manifests.
                   </p>
                 </div>
@@ -502,8 +678,8 @@ export default function AboutPage() {
                     Data Visualization &amp; BI Tooling
                   </h3>
                   <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-                    Dynamic drag-and-drop analytics engines allowing non-technical users to ingest raw CSV, 
-                    Excel sheets, or live database streams, transforming them into interactive line charts, 
+                    Dynamic drag-and-drop analytics engines allowing non-technical users to ingest raw CSV,
+                    Excel sheets, or live database streams, transforming them into interactive line charts,
                     heatmaps, cohort analysis tables, and automated executive PDF digests.
                   </p>
                 </div>
@@ -546,8 +722,8 @@ export default function AboutPage() {
                     Multi-Tenant Cloud Architectures
                   </h3>
                   <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-                    Scalable SaaS platforms designed for multiple independent organizations with 
-                    isolated tenant partitions, custom subdomains, granular Role-Based Access Control (RBAC), 
+                    Scalable SaaS platforms designed for multiple independent organizations with
+                    isolated tenant partitions, custom subdomains, granular Role-Based Access Control (RBAC),
                     subscription billing cycles, and organization-level audit logs.
                   </p>
                 </div>
@@ -590,8 +766,8 @@ export default function AboutPage() {
                     High-Throughput APIs &amp; Live Event Streams
                   </h3>
                   <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-                    High-concurrency backend services utilizing Redis in-memory caching, rate-limited public APIs, 
-                    resilient webhook receiver queues, and WebSockets (Socket.io) for live collaborative feeds 
+                    High-concurrency backend services utilizing Redis in-memory caching, rate-limited public APIs,
+                    resilient webhook receiver queues, and WebSockets (Socket.io) for live collaborative feeds
                     and live delivery status monitors.
                   </p>
                 </div>
@@ -628,13 +804,13 @@ export default function AboutPage() {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-canva text-xs font-bold uppercase tracking-wider mb-3">
               <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
-              Question 03 • Technical Arsenal
+              Question 04 • Technical Arsenal
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
               What Technologies Does <span className="text-canva-gradient">Danish Know</span>?
             </h2>
             <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-              An expert in modern full-stack web engineering, from responsive client interfaces 
+              An expert in modern full-stack web engineering, from responsive client interfaces
               to robust database aggregation pipelines and micro-interaction animations.
             </p>
           </div>
@@ -645,11 +821,10 @@ export default function AboutPage() {
               <button
                 key={cat.id}
                 onClick={() => setActiveTab(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                  activeTab === cat.id
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${activeTab === cat.id
                     ? "bg-canva-gradient text-white shadow-md font-bold"
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200"
-                }`}
+                  }`}
               >
                 {cat.label}
               </button>
@@ -677,13 +852,12 @@ export default function AboutPage() {
                       {item.name}
                     </span>
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                        item.level === "Expert"
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${item.level === "Expert"
                           ? "bg-purple-50 text-[var(--primary)] border-purple-200"
                           : item.level === "Advanced"
-                          ? "bg-cyan-50 text-teal-700 border-cyan-200"
-                          : "bg-blue-50 text-blue-700 border-blue-200"
-                      }`}
+                            ? "bg-cyan-50 text-teal-700 border-cyan-200"
+                            : "bg-blue-50 text-blue-700 border-blue-200"
+                        }`}
                     >
                       {item.level}
                     </span>
@@ -718,13 +892,13 @@ export default function AboutPage() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-canva text-xs font-bold uppercase tracking-wider mb-3">
               <span className="h-2 w-2 rounded-full bg-[var(--secondary)]" />
-              Question 04 • Battle-Tested Track Record
+              Question 05 • Battle-Tested Track Record
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
               Real-World <span className="text-canva-gradient">Production Experience</span>
             </h2>
             <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-              Not textbook theory or toy apps. Danish has built and deployed systems operating 
+              Not textbook theory or toy apps. Danish has built and deployed systems operating
               in high-stakes environments where reliability, correctness, and speed matter.
             </p>
           </div>
@@ -836,13 +1010,13 @@ export default function AboutPage() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-canva text-xs font-bold uppercase tracking-wider mb-3">
               <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
-              Question 05 • Why Hire Danish
+              Question 06 • Why Hire Danish
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
               What Value Can Danish Bring to <span className="text-canva-gradient">Your Team</span>?
             </h2>
             <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-              Hiring Danish is not just adding another developer; it means gaining a self-driven 
+              Hiring Danish is not just adding another developer; it means gaining a self-driven
               product builder who increases overall engineering velocity and product quality.
             </p>
           </div>
@@ -856,7 +1030,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Rapid Zero-to-One Velocity</h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Full-stack autonomy means features move from whiteboard concept to production deployment 
+                Full-stack autonomy means features move from whiteboard concept to production deployment
                 without the delays of constant frontend-backend handoff friction.
               </p>
             </div>
@@ -868,7 +1042,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Production-First Resilience</h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Builds with edge cases, graceful error boundaries, API retries, rate limiting, 
+                Builds with edge cases, graceful error boundaries, API retries, rate limiting,
                 and database index optimization in mind from day one.
               </p>
             </div>
@@ -880,7 +1054,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Business &amp; Product Alignment</h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Understands customer acquisition, conversion funnels, and churn reduction. 
+                Understands customer acquisition, conversion funnels, and churn reduction.
                 Focuses engineering effort on features that directly move company metrics.
               </p>
             </div>
@@ -892,7 +1066,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Modern Aesthetic Polish</h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                A rare developer who cares deeply about design systems, fluid micro-interactions, 
+                A rare developer who cares deeply about design systems, fluid micro-interactions,
                 clean typography, and responsive perfection on every viewport.
               </p>
             </div>
@@ -904,7 +1078,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Autonomous Ownership</h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Requires minimal hand-holding. Takes vague requirements, proactively researches solutions, 
+                Requires minimal hand-holding. Takes vague requirements, proactively researches solutions,
                 clarifies constraints, and executes reliably.
               </p>
             </div>
@@ -916,7 +1090,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Modern Tech Agility</h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Fluent in Next.js 16, React 19, Tailwind v4, Redis caching, and fast to adopt 
+                Fluent in Next.js 16, React 19, Tailwind v4, Redis caching, and fast to adopt
                 AI integrations or new cloud conventions as your product scales.
               </p>
             </div>
@@ -943,7 +1117,7 @@ export default function AboutPage() {
           </h2>
 
           <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Whether you need an autonomous full-stack product engineer to launch a new SaaS venture, 
+            Whether you need an autonomous full-stack product engineer to launch a new SaaS venture,
             or a reliable senior contributor to scale your existing systems, Danish is ready to deliver.
           </p>
 
