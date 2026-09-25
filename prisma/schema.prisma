@@ -13,16 +13,13 @@ model socialblog {
   slug          String   @unique
   description   String
   content       Json
-
-  featuredImage String   @default("/aishiplogo.png")
-  author        String   @default("AI Shyp Squad")
+  featuredImage String   @default("")
+  author        String   @default("danish-squad")
   category      String   @default("Logistics Automation")
   tags          String[] @default([])
-
   readingTime   String   @default("4 min read")
   publishedDate DateTime @default(now())
   isPublished   Boolean  @default(true)
-
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -30,90 +27,28 @@ model socialblog {
   @@index([createdAt])
   @@index([isPublished])
   @@index([publishedDate])
-  @@map("Blog")
 }
 
-model contactform {
+model contactsubmission {
   id        Int      @id @default(autoincrement())
-
   name      String
   email     String
   phone     String
   company   String?
   subject   String
   message   String
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([createdAt])
   @@index([email])
-  @@map("ContactSubmission")
 }
 
-model Newslettersocial {
+model socialnew {
   id        Int      @id @default(autoincrement())
-
   email     String   @unique
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
-  @@map("NewsletterSubscription")
 }
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
-
-// model socialblog {
-//   id            Int      @id @default(autoincrement())
-//   title         String
-//   slug          String   @unique
-//   description   String
-//   content       Json
-//   featuredImage String   @default("/aishiplogo.png")
-//   author        String   @default("AI Shyp Squad")
-//   category      String   @default("Logistics Automation")
-//   tags          String[] @default([])
-//   readingTime   String   @default("4 min read")
-//   publishedDate DateTime @default(now())
-//   isPublished   Boolean  @default(true)
-//   createdAt     DateTime @default(now())
-//   updatedAt     DateTime @updatedAt
-
-//   @@index([category])
-//   @@index([createdAt])
-//   @@index([isPublished])
-//   @@index([publishedDate])
-// }
-
-// model contactsubmission {
-//   id        Int      @id @default(autoincrement())
-//   name      String
-//   email     String
-//   phone     String
-//   company   String?
-//   subject   String
-//   message   String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@index([createdAt])
-//   @@index([email])
-// }
-
-// model socialnew {
-//   id        Int      @id @default(autoincrement())
-//   email     String   @unique
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@index([email])
-// }

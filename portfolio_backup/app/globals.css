@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+:root {
+  /* Canva Brand Gradient Colors */
+  --primary: #7d2ae8;             /* Canva Signature Purple/Violet */
+  --primary-hover: #6c20d4;
+  --primary-light: #f5f0ff;
+  --primary-glow: rgba(125, 42, 232, 0.25);
+
+  --secondary: #00c4cc;           /* Canva Vibrant Cyan/Turquoise */
+  --secondary-hover: #00adb5;
+  --secondary-light: #e6fafb;
+  --secondary-glow: rgba(0, 196, 204, 0.25);
+
+  --accent: #3878e8;              /* Canva Royal Blue (Middle Gradient) */
+  --accent-hover: #2663d1;
+
+  /* Multi-stop Canva Gradients */
+  --canva-gradient: linear-gradient(135deg, #00c4cc 0%, #3878e8 48%, #7d2ae8 100%);
+  --canva-gradient-hover: linear-gradient(135deg, #00adb5 0%, #2663d1 48%, #6c20d4 100%);
+  --canva-gradient-subtle: linear-gradient(135deg, rgba(0, 196, 204, 0.08) 0%, rgba(56, 120, 232, 0.06) 50%, rgba(125, 42, 232, 0.08) 100%);
+  --canva-gradient-border: linear-gradient(135deg, #00c4cc, #7d2ae8);
+
+  /* Backgrounds (Clean White BG as requested) */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --surface-white: #ffffff;
+  --surface-subtle: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-border: #e2e8f0;
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-accent: #7d2ae8;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-light: var(--secondary-light);
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-poppins: var(--font-poppins);
+}
+
+/* Background strictly white as requested: "mere ko bg whtie hii rhagia" */
+html,
+body {
+  background-color: #ffffff !important;
+  color: var(--text-primary);
+  font-family: var(--font-poppins), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 500;
+  scroll-behavior: smooth;
+}
+
+/* Typography Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.015em;
+}
+
+/* Reusable Theme Classes */
+.bg-canva-gradient {
+  background: var(--canva-gradient);
+}
+
+.bg-canva-gradient-subtle {
+  background: var(--canva-gradient-subtle);
+}
+
+.text-canva-gradient {
+  background: var(--canva-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-canva-gradient {
+  border-image: var(--canva-gradient-border) 1;
+}
+
+/* Button & Badge Utilities */
+.btn-canva-primary {
+  background: var(--canva-gradient);
+  color: #ffffff;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(125, 42, 232, 0.25);
+}
+
+.btn-canva-primary:hover {
+  background: var(--canva-gradient-hover);
+  box-shadow: 0 6px 20px rgba(125, 42, 232, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-canva-outline {
+  border: 1.5px solid rgba(125, 42, 232, 0.25);
+  color: var(--text-primary);
+  background: #ffffff;
+  transition: all 0.25s ease;
+}
+
+.btn-canva-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.badge-canva {
+  background: var(--canva-gradient-subtle);
+  border: 1px solid rgba(125, 42, 232, 0.2);
+  color: var(--primary);
+}
+
+/* Shake animation for coding challenge wrong answers */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+

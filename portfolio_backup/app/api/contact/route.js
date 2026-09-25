@@ -4,7 +4,7 @@ import { sendContactNotification } from "@/lib/mail";
 
 export async function GET() {
   try {
-    const contacts = await prisma.contactsubmission.findMany({
+    const contacts = await prisma.contactform.findMany({
       orderBy: { createdAt: "desc" },
     });
 
@@ -54,7 +54,7 @@ export async function POST(request) {
     const trimmedCompany = company?.trim() || null;
 
     // 1. Save to PostgreSQL database
-    const contactEntry = await prisma.contactsubmission.create({
+    const contactEntry = await prisma.contactform.create({
       data: {
         name: name.trim(),
         email: email.trim().toLowerCase(),
